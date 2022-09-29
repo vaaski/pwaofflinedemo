@@ -5,6 +5,13 @@ const LFKEY = "image"
 
 export const setupImage = async (element: HTMLImageElement, loaded: HTMLSpanElement) => {
   let start: number
+  loaded.innerText = `loading...`
+
+  const finished = () => {
+    const delta = performance.now() - start
+    const formatted = Math.round(delta)
+    loaded.innerText = `time to load: ${formatted}ms`
+  }
 
   const savedBlob = await localforage.getItem<Blob>(LFKEY)
 
@@ -20,8 +27,7 @@ export const setupImage = async (element: HTMLImageElement, loaded: HTMLSpanElem
     element.src = dataURL
     localforage.setItem(LFKEY, blob)
   }
+  element.onload = finished
 
-  const delta = performance.now() - start
-  const formatted = Math.round(delta)
-  loaded.innerText = `time to load: ${formatted}ms`
+  element.style.display = ""
 }
