@@ -1,13 +1,11 @@
 import "./style.css"
 import { setupCounter } from "./counter"
+import { setupImage } from "./image"
 
-document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
-  <div>
-    <h1>PWA Offline Demo</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-  </div>
-`
+const counter = document.querySelector<HTMLButtonElement>("#counter")!
+const img = document.querySelector<HTMLImageElement>("#img")!
+const loaded = document.querySelector<HTMLDivElement>("#loaded")!
+const loadButton = document.querySelector<HTMLDivElement>("#loadButton")!
 
-setupCounter(document.querySelector<HTMLButtonElement>("#counter")!)
+setupCounter(counter)
+loadButton.onclick = () => setupImage(img, loaded)
